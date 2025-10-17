@@ -60,4 +60,34 @@ function renderHeroes(data) {
     col.append(card);
     row.append(col);
   }
+    main.append(row);
+}
+
+//Accordion section
+function accordionItem(title, items, parent, index, isUrl = false) {
+  const collapseId = `${parent}-collapse${index}`;
+  let content = "<p>No data available.</p>";
+
+  if (items && items.length > 0) {
+    const list = items.map(item =>
+      isUrl
+        ? `<li><a href="${item.url}" target="_blank">${item.type}</a></li>`
+        : `<li>${item.name}</li>`
+    ).join("");
+    content = `<ul>${list}</ul>`;
+  }
+
+  return `
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button"
+          data-bs-toggle="collapse" data-bs-target="#${collapseId}">
+          ${title}
+        </button>
+      </h2>
+      <div id="${collapseId}" class="accordion-collapse collapse" data-bs-parent="#${parent}">
+        <div class="accordion-body">${content}</div>
+      </div>
+    </div>
+  `;
 }
